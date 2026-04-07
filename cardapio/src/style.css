@@ -1,0 +1,85 @@
+/* Importando a fonte Inter do Google Fonts (caso não tenha colocado no index.html) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variáveis de Cores - Tema Escuro Profissional */
+:root {
+    /* Fundos */
+    --cor-fundo-app: #121212;
+    /* Preto profundo para o fundo geral */
+    --cor-fundo-card: #242424;
+    /* Cinza carvão para os cards e formulário */
+    --cor-fundo-hover: #333333;
+    /* Cinza um pouco mais claro para hover */
+
+    /* Textos */
+    --cor-texto-principal: #FFFFFF;
+    /* Branco puro */
+    --cor-texto-mutado: #A0A0A0;
+    /* Cinza claro para descrições */
+
+    /* Cores de Destaque */
+    --cor-primaria: #D97706;
+    /* Laranja quente/caramelo (Botões e Destaques) */
+    --cor-primaria-hover: #B45309;
+    /* Laranja escuro para hover */
+
+    /* Status */
+    --cor-perigo: #EF4444;
+    /* Vermelho (Remover/Esgotado) */
+    --cor-perigo-fundo: rgba(239, 68, 68, 0.15);
+    /* Fundo avermelhado translúcido */
+
+    --cor-sucesso: #10B981;
+    /* Verde (Disponível) */
+
+    /* Bordas e Sombras */
+    --borda-suave: #333333;
+    /* Borda discreta para separar elementos */
+    --sombra-card: 0 8px 16px rgba(0, 0, 0, 0.4);
+    --raio-borda: 12px;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cor-fundo-app);
+    color: var(--cor-texto-principal);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Estilos Globais para Botões e Inputs */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+input,
+select {
+    font-family: inherit;
+    background-color: var(--cor-fundo-app);
+    border: 1px solid var(--borda-suave);
+    color: var(--cor-texto-principal);
+    padding: 10px 12px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+}
