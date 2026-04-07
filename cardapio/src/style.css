@@ -83,3 +83,22 @@ select:focus {
     outline: none;
     border-color: var(--cor-primaria);
 }
+
+/* Quebrando a centralização padrão do Vite */
+html,
+body {
+    display: block !important;
+    place-items: normal !important;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    display: block !important;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+}
