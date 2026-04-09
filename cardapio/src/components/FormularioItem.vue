@@ -35,7 +35,7 @@
 
 <template>
     <div class="card-formulario">
-        <form>
+        <form @submit.prevent="salvarProduto">
         
         <div class="grupo-input">
             <label>URL da imagem:</label>

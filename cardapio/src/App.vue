@@ -2,17 +2,20 @@
 import { ref, computed } from 'vue'
 
 import CabecalhoApp from './components/CabecalhoApp.vue'
-import FormularioItem from './components/FormularioItem.vue'  
+import FormularioItem from './components/FormularioItem.vue'
+import GradeProdutos from './components/GradeProdutos.vue'  
 
+// Define o array padrão de produtos
+const produtoPadrao = []
 
-// Exemplo de produto para a vitrine
-const produtos = ref ([
-  { id: 1, nome: 'Hambúrguer Clássico', preco: 25.00, categoria: 'Lanche', disponivel: true, imagem: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500&auto=format&fit=crop' }
-])
+const dadosSalvos = localStorage.getItem('meu_cardapio')
+const produtos = ref(dadosSalvos ? JSON.parse(dadosSalvos) : produtoPadrao)
+
 
 // Função para adicionar um novo produto à vitrine
 function adicionarProduto(produtoRecebido) {
   produtos.value.push(produtoRecebido)
+  localStorage.setItem('meu_cardapio', JSON.stringify(produtos.value))
   console.log('Produto adicionado:', produtoRecebido)
 }
 </script>
@@ -31,31 +34,17 @@ function adicionarProduto(produtoRecebido) {
 
     <main class="coluna-dir">
       <h3 class="titulo-coluna">Vitrine do Cardápio</h3>
+
+      <div v-if="produtos.length === 0" class="estado-vazio">
+        <span class="icone-vazio">🍽️</span>
+        <h4>Nenhum produto cadastrado</h4>
+        <p>Use o formulário ao lado para adicionar o primeiro item ao seu cardápio!</p>
+      </div>
       
-      <pre style="color: var(--cor-texto-mutado);">{{ produtos }}</pre>
+      <GradeProdutos :listaProdutos="produtos" />
     </main>
 
     </div>
-
-  <div class="container">
-    <main v-if="paginaAtual === 'cadastro'">
-      <h2>Cadastrar Novo Produto</h2>
-
-      <FormularioItem @adicionar="adicionarProduto" />
-
-    </main>
-
-    <main v-else-if="paginaAtual === 'vitrine'">
-      <h2>Vitrine de Produtos</h2>
-      <div v-if="produtos.length === 0">
-        <p>Nenhum produto cadastrado. Volte para a página de cadastro para adicionar produtos.</p>
-      </div>
-
-      <pre style="color: white;">{{ produtos }}</pre>
-
-    </main>
-
-  </div>
 </template>
 
 <style scoped>/* O container agora usa CSS Grid para criar duas colunas */
@@ -75,5 +64,39 @@ function adicionarProduto(produtoRecebido) {
   font-size: 1.2rem;
   color: var(--cor-texto-principal);
   margin-bottom: 20px;
+}
+
+/* --- ESTILO DO ESTADO VAZIO --- */
+.estado-vazio {
+  background-color: var(--cor-fundo-card);
+  border: 2px dashed var(--borda-suave); /* Borda tracejada dá ideia de espaço reservado */
+  border-radius: var(--raio-borda);
+  padding: 50px 20px;
+  text-align: center;
+  color: var(--cor-texto-mutado);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.icone-vazio {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.estado-vazio h4 {
+  color: var(--cor-texto-principal);
+  font-size: 1.2rem;
+}
+
+/* --- RESPONSIVIDADE --- */
+/* Quando a tela for menor que 800px (celulares e tablets pequenos) */
+@media (max-width: 800px) {
+  .container-dashboard {
+    /* Muda o grid para ter apenas 1 coluna ocupando 100% do espaço */
+    grid-template-columns: 1fr; 
+    gap: 30px; /* Reduz um pouco o buraco entre o form e a vitrine */
+  }
 }
 </style>
