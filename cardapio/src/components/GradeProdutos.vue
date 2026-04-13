@@ -8,12 +8,20 @@ defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['remover'])
+
 </script>
 
 <template>
     <div class="grade-container">
         <!-- 3. Para cada produto da lista, renderiza um CardProduto passando o produto como prop -->
-        <CardProduto v-for="produto in listaProdutos" :key="produto.id" :produto="produto" />
+        <CardProduto 
+          v-for="produto in listaProdutos" 
+          :key="produto.id" 
+          :produto="produto"
+          @remover="emit('remover', $event)"
+        />
     </div>
 </template>
 

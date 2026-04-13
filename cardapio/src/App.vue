@@ -18,6 +18,23 @@ function adicionarProduto(produtoRecebido) {
   localStorage.setItem('meu_cardapio', JSON.stringify(produtos.value))
   console.log('Produto adicionado:', produtoRecebido)
 }
+
+// Função para remover um produto da vitrine com pop-up de confirmação
+
+function removerProduto(id) {
+  if (confirm('Tem certeza que deseja remover este produto?')) {
+    produtos.value = produtos.value.filter(produto => produto.id !== id)
+    localStorage.setItem('meu_cardapio', JSON.stringify(produtos.value))
+    console.log('Produto removido:', id)
+  } else {
+    console.log('Remoção cancelada para o produto:', id)
+  } 
+}
+
+//filtro por categoria
+
+
+
 </script>
 
 
@@ -41,7 +58,11 @@ function adicionarProduto(produtoRecebido) {
         <p>Use o formulário ao lado para adicionar o primeiro item ao seu cardápio!</p>
       </div>
       
-      <GradeProdutos :listaProdutos="produtos" />
+     <GradeProdutos 
+        v-else 
+        :listaProdutos="produtos" 
+        @remover="removerProduto" 
+      />
     </main>
 
     </div>

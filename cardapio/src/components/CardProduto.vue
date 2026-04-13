@@ -6,6 +6,8 @@ defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['remover'])
 </script>
 
 <template>
@@ -23,6 +25,9 @@ defineProps({
         <span class="preco">R$ {{ produto.preco.toFixed(2) }}</span>
         
         <span v-if="!produto.disponivel" class="selo-esgotado">Esgotado</span>
+        <button class="btn-modelo-remover" @click="emit('remover', produto.id)">
+          Remover
+        </button>
       </div>
     </div>
 
@@ -94,5 +99,22 @@ defineProps({
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: bold;
+}
+
+/* --- NOVO ESTILO DO BOTÃO DE REMOVER (BASEADO NO MODELO) --- */
+.btn-modelo-remover {
+  background-color: rgb(160, 40, 40); /* Tom de vermelho escuro/marrom escuro do modelo */
+  color: white; /* Texto branco */
+  border: none; /* Sem borda */
+  cursor: pointer; /* Cursor de clique */
+  font-size: 0.8rem; /* Fonte pequena */
+  padding: 4px 10px; /* Pequeno padding retangular */
+  border-radius: 4px; /* Cantos arredondados */
+  font-weight: bold; /* Texto em negrito (opcional, mas ajuda na leitura) */
+  transition: background-color 0.2s; /* Transição suave de cor no hover */
+}
+
+.btn-modelo-remover:hover {
+  background-color: rgb(180, 50, 50); /* Clareia sutilmente no hover */
 }
 </style>
