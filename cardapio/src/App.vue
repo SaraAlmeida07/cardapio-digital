@@ -32,6 +32,15 @@ function removerProduto(id) {
 }
 
 //filtro por categoria
+const filtroAtivo = ref('Todas')
+
+const produtosFiltrados = computed(() => {
+  if (filtroAtivo.value === 'Todas') {
+    return produtos.value
+  } else {
+    return produtos.value.filter(produto => produto.categoria === filtroAtivo.value)
+  }
+})
 
 
 
@@ -50,6 +59,45 @@ function removerProduto(id) {
     </aside>
 
     <main class="coluna-dir">
+
+      <div class="filtros-container">
+        <h3 class="titulo-coluna">Filtros de Categoria</h3>
+        <div class="botoes-filtro">
+          
+          <button 
+            class="btn-filtro" 
+            :class="{ ativo: filtroAtivo === 'Todas' }" 
+            @click="filtroAtivo = 'Todas'"
+          >
+            Todas
+          </button>
+          
+          <button 
+            class="btn-filtro" 
+            :class="{ ativo: filtroAtivo === 'Lanche' }" 
+            @click="filtroAtivo = 'Lanche'"
+          >
+            🍔 Lanches
+          </button>
+          
+          <button 
+            class="btn-filtro" 
+            :class="{ ativo: filtroAtivo === 'Bebida' }" 
+            @click="filtroAtivo = 'Bebida'"
+          >
+            🥤 Bebidas
+          </button>
+          
+          <button 
+            class="btn-filtro" 
+            :class="{ ativo: filtroAtivo === 'Sobremesa' }" 
+            @click="filtroAtivo = 'Sobremesa'"
+          >
+            🍰 Sobremesas
+          </button>
+
+        </div>
+      </div>
       <h3 class="titulo-coluna">Vitrine do Cardápio</h3>
 
       <div v-if="produtos.length === 0" class="estado-vazio">
@@ -60,9 +108,11 @@ function removerProduto(id) {
       
      <GradeProdutos 
         v-else 
-        :listaProdutos="produtos" 
+        :listaProdutos="produtosFiltrados" 
         @remover="removerProduto" 
       />
+
+      
     </main>
 
     </div>
@@ -109,6 +159,40 @@ function removerProduto(id) {
 .estado-vazio h4 {
   color: var(--cor-texto-principal);
   font-size: 1.2rem;
+}
+
+/* --- ESTILOS DOS FILTROS --- */
+.filtros-container {
+  margin-bottom: 30px;
+}
+
+.botoes-filtro {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; /* Garante que os botões caiam para a linha de baixo se a tela for pequena */
+}
+
+.btn-filtro {
+  background-color: transparent; /* Fundo transparente por padrão */
+  color: var(--cor-texto-principal);
+  border: 1px solid var(--borda-suave);
+  padding: 8px 18px;
+  border-radius: 20px; /* Isso que cria o formato de 'pílula' */
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.btn-filtro:hover {
+  border-color: var(--cor-primaria); /* Acende a borda no hover */
+}
+
+/* A CLASSE MÁGICA: Só é ativada no botão clicado */
+.btn-filtro.ativo {
+  background-color: var(--cor-primaria);
+  color: white;
+  border-color: var(--cor-primaria);
+  font-weight: bold;
 }
 
 /* --- RESPONSIVIDADE --- */

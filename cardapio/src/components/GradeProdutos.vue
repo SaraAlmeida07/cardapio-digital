@@ -30,7 +30,6 @@ const emit = defineEmits(['remover'])
   display: grid;
   /* Cria colunas responsivas: no mínimo 250px, se tiver mais espaço, divide igualmente */
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-   grid-template-columns: space-between;
   gap: 20px;
 }
 </style>
