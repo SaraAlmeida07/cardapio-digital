@@ -42,7 +42,16 @@ const produtosFiltrados = computed(() => {
   }
 })
 
+//calculadoras do dashboard
+const totalProdutos = computed(() => produtos.value.length)
+const produtosDisponiveis = computed(() => produtos.value.filter(p => p.disponivel).length)
 
+//preço médio dos produtos filtrados 
+const precoMedio = computed(() => {
+  if (produtosFiltrados.value.length === 0) return 0
+  const somaPrecos = produtosFiltrados.value.reduce((soma, produto) => soma + produto.preco, 0)
+  return somaPrecos / produtosFiltrados.value.length
+})
 
 </script>
 
@@ -50,7 +59,38 @@ const produtosFiltrados = computed(() => {
 <template>
 
   <CabecalhoApp />
-    <div class="container-dashboard">
+    
+  <section class="dashboard-resumo">
+    <h3 class="titulo-coluna">Dashboard Resumo</h3>
+    
+    <div class="cards-resumo">
+      <div class="card-dado">
+        <span class="icone-dado">📄</span>
+        <div class="info-dado">
+          <p>Total de Produtos :</p>
+          <strong>{{ totalProdutos }}</strong>
+        </div>
+      </div>
+
+      <div class="card-dado">
+        <span class="icone-dado">✅</span>
+        <div class="info-dado">
+          <p>Itens Disponíveis:</p>
+          <strong>{{ produtosDisponiveis }}</strong>
+        </div>
+      </div>
+
+      <div class="card-dado">
+        <span class="icone-dado">💰</span>
+        <div class="info-dado">
+          <p>Preço Médio ({{ filtroAtivo }}):</p>
+          <strong>R$ {{ precoMedio.toFixed(2) }}</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+    
+  <div class="container-dashboard">
     
     <aside class="coluna-esq">
       <h3 class="titulo-coluna">Adicionar Novo Item</h3>
@@ -63,7 +103,6 @@ const produtosFiltrados = computed(() => {
       <div class="filtros-container">
         <h3 class="titulo-coluna">Filtros de Categoria</h3>
         <div class="botoes-filtro">
-          
           <button 
             class="btn-filtro" 
             :class="{ ativo: filtroAtivo === 'Todas' }" 
@@ -71,7 +110,6 @@ const produtosFiltrados = computed(() => {
           >
             Todas
           </button>
-          
           <button 
             class="btn-filtro" 
             :class="{ ativo: filtroAtivo === 'Lanche' }" 
@@ -79,7 +117,6 @@ const produtosFiltrados = computed(() => {
           >
             🍔 Lanches
           </button>
-          
           <button 
             class="btn-filtro" 
             :class="{ ativo: filtroAtivo === 'Bebida' }" 
@@ -87,7 +124,6 @@ const produtosFiltrados = computed(() => {
           >
             🥤 Bebidas
           </button>
-          
           <button 
             class="btn-filtro" 
             :class="{ ativo: filtroAtivo === 'Sobremesa' }" 
@@ -193,6 +229,54 @@ const produtosFiltrados = computed(() => {
   color: white;
   border-color: var(--cor-primaria);
   font-weight: bold;
+}
+
+/* --- ESTILOS DO DASHBOARD RESUMO --- */
+.dashboard-resumo {
+  /* Truque mágico: faz esse bloco ocupar todas as colunas do grid */
+  grid-column: 1 / -1; 
+  margin-bottom: 10px;
+}
+
+.cards-resumo {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Se a tela for pequena, eles caem para a linha de baixo */
+}
+
+.card-dado {
+  flex: 1; /* Faz todos os cartões terem a mesma largura */
+  min-width: 220px;
+  background-color: var(--cor-fundo-card);
+  padding: 15px 20px;
+  border-radius: var(--raio-borda);
+  border: 1px solid var(--borda-suave);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icone-dado {
+  font-size: 1.8rem;
+  background-color: var(--borda-suave);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  opacity: 0.8;
+}
+
+.info-dado p {
+  color: var(--cor-texto-mutado);
+  font-size: 0.85rem;
+  margin-bottom: 2px;
+}
+
+.info-dado strong {
+  color: var(--cor-texto-principal);
+  font-size: 1.4rem;
 }
 
 /* --- RESPONSIVIDADE --- */
