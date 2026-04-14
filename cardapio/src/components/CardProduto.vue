@@ -24,10 +24,13 @@ const emit = defineEmits(['remover'])
       <div class="rodape-card">
         <span class="preco">R$ {{ produto.preco.toFixed(2) }}</span>
         
-        <span v-if="!produto.disponivel" class="selo-esgotado">Esgotado</span>
-        <button class="btn-modelo-remover" @click="emit('remover', produto.id)">
-          Remover
-        </button>
+        <div class="acoes-rodape">
+          <span v-if="!produto.disponivel" class="selo-esgotado">Esgotado</span>
+          
+          <button class="btn-modelo-remover" @click="emit('remover', produto.id)">
+            Remover
+          </button>
+        </div>
       </div>
     </div>
 
@@ -88,8 +91,10 @@ const emit = defineEmits(['remover'])
 
 .preco {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: clamp(0.85rem, 3vw, 1.2rem);
   color: var(--cor-texto-principal);
+  flex-wrap: nowrap; /* 1. Proíbe expressamente a quebra de linha! */
+  white-space: nowrap;
 }
 
 .selo-esgotado {
@@ -99,6 +104,13 @@ const emit = defineEmits(['remover'])
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: bold;
+}
+.acoes-rodape {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+  flex-shrink: 0; /* 3. Impede que o botão e o selo sejam esmagados pelo preço */
 }
 
 /* --- NOVO ESTILO DO BOTÃO DE REMOVER (BASEADO NO MODELO) --- */

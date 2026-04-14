@@ -1,18 +1,12 @@
 <script setup>
-// Usamos defineProps para receber do App.vue qual é a página atual
-defineProps({
-  paginaAtual: String
-})
 
-// Usamos defineEmits para avisar o App.vue quando o usuário clicar em um botão
-const emit = defineEmits(['mudar-pagina'])
 </script>
 
 <template>
   <header class="cabecalho-fundo">
     <div class="cabecalho-conteudo">
       <div class="logo-titulo">
-        <span class="icone">🍔</span>
+        <img src="/src/assets/logoCd.png" alt="Logo CD Food" class="icone">
         <h1>Cardápio Digital</h1>
       </div>
     </div>
@@ -21,16 +15,16 @@ const emit = defineEmits(['mudar-pagina'])
 
 <style scoped>
 .cabecalho-fundo {
-  background-color: var(--cor-fundo-card);
+  background-color: transparent;
   border-bottom: 1px solid var(--borda-suave);
   border-radius: 10px;
   width: 100%;
 }
 
 .cabecalho-conteudo {
-  max-width: 1200px; /* Aumentei um pouco para caber o layout lado a lado */
+  max-width: 100%; 
   margin: 0 auto;
-  padding: 10px 10px;
+  padding: 10px 20px;
   display: flex;
   align-items: center; 
 }
@@ -38,11 +32,13 @@ const emit = defineEmits(['mudar-pagina'])
 .logo-titulo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .icone {
-  font-size: 2rem;
+  height: 65px; /* Trava a altura da logo */
+  width: auto; /* Garante que ela não fique esmagada ou esticada */
+  object-fit: contain;
 }
 
 h1 {

@@ -232,21 +232,22 @@ const precoMedio = computed(() => {
 }
 
 /* --- ESTILOS DO DASHBOARD RESUMO --- */
+
 .dashboard-resumo {
-  /* Truque mágico: faz esse bloco ocupar todas as colunas do grid */
   grid-column: 1 / -1; 
-  margin-bottom: 10px;
+  margin: 20px; /* Dei um espacinho a mais aqui para separar dos botões */
 }
 
+/* 1. MUDAMOS DE FLEX PARA GRID AQUI */
 .cards-resumo {
-  display: flex;
+  display: grid;
+  /* Se tiver espaço, coloca lado a lado. Se a tela for menor que 250px, empilha! */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  flex-wrap: wrap; /* Se a tela for pequena, eles caem para a linha de baixo */
 }
 
 .card-dado {
-  flex: 1; /* Faz todos os cartões terem a mesma largura */
-  min-width: 220px;
+  /* Apagamos o flex: 1 e o min-width que estavam aqui */
   background-color: var(--cor-fundo-card);
   padding: 15px 20px;
   border-radius: var(--raio-borda);
@@ -257,6 +258,9 @@ const precoMedio = computed(() => {
 }
 
 .icone-dado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: 1.8rem;
   background-color: var(--borda-suave);
   width: 50px;
@@ -280,12 +284,17 @@ const precoMedio = computed(() => {
 }
 
 /* --- RESPONSIVIDADE --- */
-/* Quando a tela for menor que 800px (celulares e tablets pequenos) */
-@media (max-width: 800px) {
+/* Quando a tela for menor que 700px (celulares e tablets pequenos) */
+@media (max-width: 700px) {
   .container-dashboard {
     /* Muda o grid para ter apenas 1 coluna ocupando 100% do espaço */
     grid-template-columns: 1fr; 
     gap: 30px; /* Reduz um pouco o buraco entre o form e a vitrine */
   }
+  .cards-resumo {
+    grid-template-columns: 1fr;
+  }
 }
+
+
 </style>
